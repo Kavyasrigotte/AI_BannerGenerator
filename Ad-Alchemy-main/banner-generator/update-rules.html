@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Update Firestore Rules</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+    pre { background: #f6f8fa; padding: 15px; border-radius: 5px; overflow-x: auto; }
+    .step { margin-bottom: 30px; }
+    h1 { color: #333; }
+    h2 { color: #0366d6; }
+    .important { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Update Firestore Rules</h1>
+  <p>Follow these steps to update your Firestore security rules:</p>
+  
+  <div class="step">
+    <h2>Step 1: Go to Firebase Console</h2>
+    <p>Visit <a href="https://console.firebase.google.com/" target="_blank">https://console.firebase.google.com/</a> and select your project.</p>
+  </div>
+  
+  <div class="step">
+    <h2>Step 2: Navigate to Firestore</h2>
+    <p>In the left sidebar, click on "Firestore Database".</p>
+  </div>
+  
+  <div class="step">
+    <h2>Step 3: Go to Rules Tab</h2>
+    <p>Click on the "Rules" tab at the top of the Firestore page.</p>
+  </div>
+  
+  <div class="step">
+    <h2>Step 4: Replace the Rules</h2>
+    <p>Delete all existing rules and replace them with the following:</p>
+    <pre>rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow read/write access to all users for development
+    match /{document=**} {
+      allow read, write: if true;
+    }
+
+    // For production, you should use more restrictive rules like these:
+    /*
+    // Allow authenticated users to read and write their own data
+    match /designs/{designId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+    
+    // Allow authenticated users to create new designs
+    match /designs/{designId} {
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+    }
+    */
+  }
+} </pre>
+  </div>
+  
+  <div class="step">
+    <h2>Step 5: Publish the Rules</h2>
+    <p>Click the "Publish" button to apply these rules.</p>
+  </div>
+  
+  <p class="important">Note: These rules allow all read/write operations for development purposes. For production, use more restrictive rules!</p>
+</body>
+</html>
+  

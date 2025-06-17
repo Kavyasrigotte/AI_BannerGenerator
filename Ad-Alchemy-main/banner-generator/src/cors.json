@@ -1,0 +1,7 @@
+[
+  {
+    "origin": ["http://localhost:3000", "https://your-app-domain.com"],
+    "method": ["GET", "PUT", "POST", "DELETE", "HEAD"],
+    "maxAgeSeconds": 3600
+  }
+]
